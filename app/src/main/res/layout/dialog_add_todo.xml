@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your todo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_todo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_red"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="#FF0000"
+            app:cardCornerRadius="20dp"
+            app:strokeColor="@color/black"
+            app:strokeWidth="2dp"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_green"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            app:cardBackgroundColor="#00FF00"
+            app:cardCornerRadius="20dp"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_blue"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            app:cardBackgroundColor="#0000FF"
+            app:cardCornerRadius="20dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/color_preview"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF" />
+
+</LinearLayout>

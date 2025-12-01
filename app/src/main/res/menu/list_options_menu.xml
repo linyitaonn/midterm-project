@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--  This is our one standard application action (creating a new note). -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_search"
+        android:title="@string/menu_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/menu_add"
-          android:icon="@drawable/ic_menu_compose"
+          android:icon="@drawable/ic_add"
           android:title="@string/menu_add"
           android:alphabeticShortcut='a'
-          android:showAsAction="always" />
-    <!--  If there is currently data in the clipboard, this adds a PASTE menu item to the menu
-          so that the user can paste in the data.. -->
+          app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_filter_category"
+        android:title="@string/menu_filter_category"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        app:showAsAction="ifRoom">
+        <menu>
+            <!-- Categories will be added here dynamically -->
+        </menu>
+    </item>
     <item android:id="@+id/menu_paste"
           android:icon="@drawable/ic_menu_compose"
           android:title="@string/menu_paste"

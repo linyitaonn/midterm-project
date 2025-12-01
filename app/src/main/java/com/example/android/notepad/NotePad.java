@@ -45,10 +45,6 @@ public final class NotePad {
          */
         public static final String TABLE_NAME = "notes";
 
-        /*
-         * URI definitions
-         */
-
         /**
          * The scheme part for this provider's URI
          */
@@ -149,6 +145,62 @@ public final class NotePad {
          * Column name for the modification timestamp
          * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
          */
+        public static final String COLUMN_NAME_MODIFICATION_DATE = "modified";
+
+        /**
+         * Column name for the category of the note
+         * <P>Type: TEXT</P>
+         */
+        public static final String COLUMN_NAME_CATEGORY = "category";
+    }
+
+     /**
+     * Todos table contract
+     */
+    public static final class Todos implements BaseColumns {
+
+        // This class cannot be instantiated
+        private Todos() {}
+
+        /**
+         * The table name offered by this provider
+         */
+        public static final String TABLE_NAME = "todos";
+
+        /**
+         * The scheme part for this provider's URI
+         */
+        private static final String SCHEME = "content://";
+
+        /**
+         * Path part for the Todos URI
+         */
+        private static final String PATH_TODOS = "/todos";
+
+        /**
+         * Path part for the Todo ID URI
+         */
+        private static final String PATH_TODO_ID = "/todos/";
+
+        public static final int TODO_ID_PATH_POSITION = 1;
+
+        public static final Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_TODOS);
+
+        public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_TODO_ID);
+
+        public static final Uri CONTENT_ID_URI_PATTERN = Uri.parse(SCHEME + AUTHORITY + PATH_TODO_ID + "/#");
+
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.todo";
+
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.google.todo";
+
+        public static final String DEFAULT_SORT_ORDER = "created DESC";
+
+        // Column definitions
+        public static final String COLUMN_NAME_TEXT = "text";
+        public static final String COLUMN_NAME_COLOR = "color";
+        public static final String COLUMN_NAME_IS_COMPLETED = "completed";
+        public static final String COLUMN_NAME_CREATE_DATE = "created";
         public static final String COLUMN_NAME_MODIFICATION_DATE = "modified";
     }
 }
