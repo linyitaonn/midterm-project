@@ -65,7 +65,7 @@ void bind(NotesListFragment.NoteHolder note) {
 ```
 
 <p align="center">
-  <img src="picture/category_display.png" alt="时间戳显示效果" width="300">
+  <img src="readmePic/category_display.png" alt="时间戳显示效果" width="300">
 </p>
 <p align="center">
   <em>笔记列表中显示的时间戳</em>
@@ -131,7 +131,7 @@ public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 ```
 
 <p align="center">
-  <img src="picture/search_function.png" alt="搜索功能演示" width="300">
+  <img src="readmePic/search_function.png" alt="搜索功能演示" width="300">
 </p>
 <p align="center">
   <em>在笔记标题和内容中进行搜索</em>
@@ -185,7 +185,7 @@ public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 ```
 
 <p align="center">
-  <img src="picture/todo_display.png" alt="待办事项展示" width="300">
+  <img src="readmePic/todo_display.png" alt="待办事项展示" width="300">
 </p>
 <p align="center">
   <em>待办事项列表，支持滑动删除和颜色标记</em>
@@ -254,7 +254,7 @@ private void showAddTodoDialog() {
 ```
 
 <p align="center">
-  <img src="picture/create_todo.png" alt="新建待办事项" width="300">
+  <img src="readmePic/create_todo.png" alt="新建待办事项" width="300">
 </p>
 <p align="center">
   <em>创建新的待办事项界面</em>
@@ -350,7 +350,7 @@ public void onLoadFinished(@NonNull Loader<Cursor> loader, @Nullable Cursor data
 ```
 
 <p align="center">
-  <img src="picture/category_display.png" alt="笔记分类展示" width="300">
+  <img src="readmePic/category_display.png" alt="笔记分类展示" width="300">
 </p>
 <p align="center">
   <em>按分类组织的笔记列表</em>
