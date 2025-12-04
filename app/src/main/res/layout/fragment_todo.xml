@@ -8,22 +8,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_todos"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-            app:title="@string/title_todos"
-            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_todos"
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:padding="4dp"
+        android:clipToPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_todo"
@@ -31,6 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add" />
+        android:src="@drawable/ic_add"
+        android:contentDescription="Add Todo"
+        app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -45,7 +45,7 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         }
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_todos);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mAdapter = new TodoAdapter(getContext(), null);
@@ -81,18 +81,46 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
 
         final String[] selectedColor = {"#FFFFFF"}; // Default color
 
-        dialogView.findViewById(R.id.color_red).setOnClickListener(v -> {
-            selectedColor[0] = "#FF0000";
+        // 使用更高级的颜色
+        dialogView.findViewById(R.id.color_coral).setOnClickListener(v -> {
+            selectedColor[0] = "#FF7F7F"; // 柔和的珊瑚色
             colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
             dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
         });
-        dialogView.findViewById(R.id.color_green).setOnClickListener(v -> {
-            selectedColor[0] = "#00FF00";
+        dialogView.findViewById(R.id.color_mint).setOnClickListener(v -> {
+            selectedColor[0] = "#7FFFD4"; // 薄荷绿
             colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
             dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
         });
-        dialogView.findViewById(R.id.color_blue).setOnClickListener(v -> {
-            selectedColor[0] = "#0000FF";
+        dialogView.findViewById(R.id.color_lavender).setOnClickListener(v -> {
+            selectedColor[0] = "#E6E6FA"; // 淡紫色
+            colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
+            dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
+        });
+        
+        // 新增的高贵颜色
+        dialogView.findViewById(R.id.color_rose_gold).setOnClickListener(v -> {
+            selectedColor[0] = "#B76E79"; // 玫瑰金
+            colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
+            dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
+        });
+        dialogView.findViewById(R.id.color_sapphire).setOnClickListener(v -> {
+            selectedColor[0] = "#0F52BA"; // 宝石蓝
+            colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
+            dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
+        });
+        dialogView.findViewById(R.id.color_emerald).setOnClickListener(v -> {
+            selectedColor[0] = "#50C878"; // 祖母绿
+            colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
+            dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
+        });
+        dialogView.findViewById(R.id.color_amethyst).setOnClickListener(v -> {
+            selectedColor[0] = "#9966CC"; // 紫水晶
+            colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
+            dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
+        });
+        dialogView.findViewById(R.id.color_gold).setOnClickListener(v -> {
+            selectedColor[0] = "#FFD700"; // 黄金
             colorPreview.setBackgroundColor(Color.parseColor(selectedColor[0]));
             dialogView.setBackgroundColor(Color.parseColor(selectedColor[0]));
         });

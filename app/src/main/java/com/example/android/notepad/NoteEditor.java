@@ -16,6 +16,7 @@
 
 package com.example.android.notepad;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -83,6 +84,7 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
     private EditText mTitleText;
     private AutoCompleteTextView mCategoryAutoComplete;
     private String mOriginalContent;
+    private boolean mPerformPasteOnLoad = false;
 
     public static class LinedEditText extends EditText {
         private final Rect mRect;
@@ -119,8 +121,7 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
         if (Intent.ACTION_EDIT.equals(action)) {
             mState = STATE_EDIT;
             mUri = intent.getData();
-        } else if (Intent.ACTION_INSERT.equals(action)
-                || Intent.ACTION_PASTE.equals(action)) {
+        } else if (Intent.ACTION_INSERT.equals(action)) { // 移除了对ACTION_PASTE的处理
             mState = STATE_INSERT;
             Uri insertUri = intent.getData();
             if (insertUri == null) {
@@ -145,6 +146,12 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
         // 设置 Toolbar
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        
+        // 启用返回按钮
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         mTitleText = findViewById(R.id.title);
         mCategoryAutoComplete = findViewById(R.id.category_autocomplete);
@@ -153,10 +160,7 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
         // 设置分类自动完成文本框
         setupCategoryAutocomplete();
 
-        if (Intent.ACTION_PASTE.equals(action)) {
-            performPaste();
-            mState = STATE_EDIT;
-        }
+        // 移除了对ACTION_PASTE的特殊处理
 
         if (savedInstanceState != null) {
             mOriginalContent = savedInstanceState.getString(ORIGINAL_CONTENT);
@@ -195,7 +199,6 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // 当用户选择一个项目后，清除提示文本
-                mCategoryAutoComplete.setHint("");
             }
         });
         
@@ -211,9 +214,6 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty()) {
-                    mCategoryAutoComplete.setHint("点击选择或输入新分类");
-                }
             }
         });
     }
@@ -231,7 +231,6 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
             }
             cursor.close();
         }
-        // 不再添加默认分类，只返回实际存在的分类
         return new ArrayList<>(categories);
     }
 
@@ -285,9 +284,13 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
             
             // 在编辑状态下确保保存按钮可见
             menu.findItem(R.id.menu_save).setVisible(true);
+            // 在编辑状态下显示删除按钮
+            menu.findItem(R.id.menu_delete).setVisible(true);
         } else if (mState == STATE_INSERT) {
             // 在新建笔记状态下确保保存按钮可见
             menu.findItem(R.id.menu_save).setVisible(true);
+            // 在新建笔记状态下隐藏删除按钮
+            menu.findItem(R.id.menu_delete).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -304,42 +307,46 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
         } else if (id == R.id.menu_delete) {
             deleteNote();
             finish();
+        } else if (id == android.R.id.home) {
+            // 处理返回按钮
+            handleBackPressed();
+            return true;
         } else if (id == R.id.menu_revert) {
             cancelNote();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void performPaste() {
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ContentResolver cr = getContentResolver();
-        ClipData clip = clipboard.getPrimaryClip();
-        if (clip != null) {
-            String text = null;
-            String title = null;
-
-            ClipData.Item item = clip.getItemAt(0);
-            Uri uri = item.getUri();
-
-            if (uri != null && NotePad.Notes.CONTENT_ITEM_TYPE.equals(cr.getType(uri))) {
-                Cursor orig = cr.query(uri, PROJECTION, null, null, null);
-                if (orig != null) {
-                    if (orig.moveToFirst()) {
-                        int colNoteIndex = orig.getColumnIndex(NotePad.Notes.COLUMN_NAME_NOTE);
-                        int colTitleIndex = orig.getColumnIndex(NotePad.Notes.COLUMN_NAME_TITLE);
-                        text = orig.getString(colNoteIndex);
-                        title = orig.getString(colTitleIndex);
-                    }
-                    orig.close();
-                }
-            }
-
-            if (text == null) {
-                text = item.coerceToText(this).toString();
-            }
-
-            updateNote(text, title, null);
+    private void handleBackPressed() {
+        String text = mText.getText().toString();
+        String title = mTitleText.getText().toString();
+        
+        // 如果标题和内容都为空，则直接返回不创建笔记
+        if (text.trim().isEmpty() && title.trim().isEmpty()) {
+            setResult(RESULT_CANCELED);
+            finish();
+        } else {
+            // 如果有内容，则询问用户是否保存
+            new AlertDialog.Builder(this)
+                    .setTitle("保存笔记")
+                    .setMessage("是否保存当前笔记?")
+                    .setPositiveButton("保存", (dialog, which) -> {
+                        String category = mCategoryAutoComplete.getText().toString();
+                        updateNote(text, title, category);
+                        finish();
+                    })
+                    .setNegativeButton("不保存", (dialog, which) -> {
+                        setResult(RESULT_CANCELED);
+                        finish();
+                    })
+                    .setNeutralButton("取消", null)
+                    .show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        handleBackPressed();
     }
 
     private void updateNote(String text, String title, String category) {
@@ -428,8 +435,10 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
 
             int colCategoryIndex = mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_CATEGORY);
             String category = mCursor.getString(colCategoryIndex);
-            // 不再设置默认分类，让输入框保持为空
-            
+            if (category != null) {
+                mCategoryAutoComplete.setText(category);
+            }
+
             // 每次数据加载完成后刷新分类列表
             setupCategoryAutocomplete();
 
@@ -440,6 +449,8 @@ public class NoteEditor extends AppCompatActivity implements LoaderManager.Loade
             setTitle(getText(R.string.error_title));
             mText.setText(getText(R.string.error_message));
         }
+        
+        // 移除了与粘贴相关的代码
     }
 
     @Override

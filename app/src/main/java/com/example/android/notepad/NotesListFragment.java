@@ -31,6 +31,8 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -82,6 +84,12 @@ public class NotesListFragment extends Fragment implements LoaderManager.LoaderC
 
         mRecyclerView = view.findViewById(R.id.notes_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // 设置 FloatingActionButton
+        FloatingActionButton fab = view.findViewById(R.id.fab_add_note);
+        fab.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_INSERT, NotePad.Notes.CONTENT_URI));
+        });
 
         LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
     }
@@ -143,12 +151,6 @@ public class NotesListFragment extends Fragment implements LoaderManager.LoaderC
         super.onPrepareOptionsMenu(menu);
 
         if (getActivity() != null) {
-            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-            MenuItem mPasteItem = menu.findItem(R.id.menu_paste);
-            if (mPasteItem != null) {
-                mPasteItem.setEnabled(clipboard.hasPrimaryClip());
-            }
-
             SubMenu categorySubMenu = menu.findItem(R.id.menu_filter_category).getSubMenu();
             categorySubMenu.clear();
             categorySubMenu.add(Menu.NONE, R.id.menu_show_all_categories, Menu.NONE, "Show All");
@@ -180,10 +182,7 @@ public class NotesListFragment extends Fragment implements LoaderManager.LoaderC
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (getActivity() != null) {
             int id = item.getItemId();
-            if (id == R.id.menu_paste) {
-                startActivity(new Intent(Intent.ACTION_PASTE, NotePad.Notes.CONTENT_URI));
-                return true;
-            } else if (id == R.id.menu_show_all_categories) {
+            if (id == R.id.menu_show_all_categories) {
                 filterByCategory(null);
                 return true;
             } else if (item.getGroupId() == Menu.NONE && id != R.id.menu_search && id != R.id.menu_filter_category) { // Dynamic category items

@@ -25,29 +25,84 @@
         android:orientation="horizontal"
         android:layout_marginTop="16dp">
 
+        <!-- 柔和的珊瑚色 -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/color_red"
+            android:id="@+id/color_coral"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:cardBackgroundColor="#FF0000"
+            app:cardBackgroundColor="#FF7F7F"
             app:cardCornerRadius="20dp"
             app:strokeColor="@color/black"
             app:strokeWidth="2dp"/>
 
+        <!-- 薄荷绿 -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/color_green"
+            android:id="@+id/color_mint"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            app:cardBackgroundColor="#00FF00"
+            app:cardBackgroundColor="#7FFFD4"
             app:cardCornerRadius="20dp"/>
 
+        <!-- 淡紫色 -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/color_blue"
+            android:id="@+id/color_lavender"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            app:cardBackgroundColor="#0000FF"
+            app:cardBackgroundColor="#E6E6FA"
+            app:cardCornerRadius="20dp"/>
+
+        <!-- 玫瑰金 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_rose_gold"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            app:cardBackgroundColor="#B76E79"
+            app:cardCornerRadius="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <!-- 宝石蓝 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_sapphire"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="#0F52BA"
+            app:cardCornerRadius="20dp"/>
+
+        <!-- 祖母绿 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_emerald"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            app:cardBackgroundColor="#50C878"
+            app:cardCornerRadius="20dp"/>
+
+        <!-- 紫水晶 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_amethyst"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            app:cardBackgroundColor="#9966CC"
+            app:cardCornerRadius="20dp"/>
+
+        <!-- 黄金 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_gold"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            app:cardBackgroundColor="#FFD700"
             app:cardCornerRadius="20dp"/>
 
     </LinearLayout>

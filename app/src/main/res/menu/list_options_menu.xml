@@ -21,8 +21,4 @@
             <!-- Categories will be added here dynamically -->
         </menu>
     </item>
-    <item android:id="@+id/menu_paste"
-          android:icon="@drawable/ic_menu_compose"
-          android:title="@string/menu_paste"
-          android:alphabeticShortcut='p' />
 </menu>

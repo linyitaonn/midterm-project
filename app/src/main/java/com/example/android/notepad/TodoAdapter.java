@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -54,7 +56,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
 
         holder.mTextView.setText(text);
         holder.mCardView.setCardBackgroundColor(Color.parseColor(color));
-        // 不再设置CheckBox的状态，因为我们移除了CheckBox
 
         if (isCompleted) {
             holder.mTextView.setPaintFlags(holder.mTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -79,6 +80,33 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
                 holder.mCardView.setCardBackgroundColor(Color.parseColor(color));
             }
         });
+        
+        // 长按项目触发删除操作
+        holder.itemView.setOnLongClickListener(v -> {
+            showDeleteConfirmationDialog(id, text, holder.itemView);
+            return true;
+        });
+    }
+
+    private void showDeleteConfirmationDialog(long id, String text, View itemView) {
+        new AlertDialog.Builder(mContext)
+                .setTitle("删除任务")
+                .setMessage("确定要删除任务 \"" + text + "\" 吗？")
+                .setPositiveButton("删除", (dialog, which) -> {
+                    // 执行删除操作
+                    int rowsDeleted = mContext.getContentResolver().delete(
+                            NotePad.Todos.CONTENT_URI,
+                            NotePad.Todos._ID + "=?",
+                            new String[]{String.valueOf(id)}
+                    );
+                    
+                    if (rowsDeleted > 0) {
+                        // 显示删除成功提示
+                        Toast.makeText(mContext, "任务已删除", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .show();
     }
 
     @Override
@@ -99,13 +127,11 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
     public static class TodoViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public CardView mCardView;
-        // 移除了mCheckBox字段，因为我们不再使用CheckBox
 
         public TodoViewHolder(View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.todo_text);
             mCardView = itemView.findViewById(R.id.todo_card);
-            // 不再查找CheckBox，因为我们移除了它
         }
     }
 }
