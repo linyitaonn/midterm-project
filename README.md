@@ -65,7 +65,10 @@ void bind(NotesListFragment.NoteHolder note) {
 ```
 
 <p align="center">
-  <img src="picture/newNote.png" alt="时间戳显示效果" width="300">
+  <img src="picture/分类展示.png" alt="时间戳显示效果" width="300">
+</p>
+<p align="center">
+  <em>笔记列表中显示的时间戳</em>
 </p>
 
 #### 笔记搜索功能
@@ -130,6 +133,9 @@ public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 <p align="center">
   <img src="picture/搜索功能.png" alt="搜索功能演示" width="300">
 </p>
+<p align="center">
+  <em>在笔记标题和内容中进行搜索</em>
+</p>
 
 ### 拓展功能
 
@@ -179,7 +185,10 @@ public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 ```
 
 <p align="center">
-  <img src="picture/newNote.png" alt="新建笔记界面" width="300">
+  <img src="picture/待办展示.png" alt="待办事项展示" width="300">
+</p>
+<p align="center">
+  <em>待办事项列表，支持滑动删除和颜色标记</em>
 </p>
 
 #### 待办事项管理
@@ -245,7 +254,10 @@ private void showAddTodoDialog() {
 ```
 
 <p align="center">
-  <img src="picture/待办展示.png" alt="待办事项展示" width="300">
+  <img src="picture/createTodo.png" alt="新建待办事项" width="300">
+</p>
+<p align="center">
+  <em>创建新的待办事项界面</em>
 </p>
 
 #### 笔记分类整理
@@ -339,6 +351,9 @@ public void onLoadFinished(@NonNull Loader<Cursor> loader, @Nullable Cursor data
 
 <p align="center">
   <img src="picture/分类展示.png" alt="笔记分类展示" width="300">
+</p>
+<p align="center">
+  <em>按分类组织的笔记列表</em>
 </p>
 
 ## 部署与使用
